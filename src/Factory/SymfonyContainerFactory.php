@@ -65,7 +65,7 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
         $diExtensions = require sprintf('%s/di.php', $environment->__toString());
         $extensions = $diExtensions['extensions'];
         foreach ($extensions as $extension) {
-            $extension->load([], $this->containerBuilder);
+            $extension->load([], $this->containerBuilder, $environment);
         }
         $compilerPasses = $diExtensions['compiler_passes'];
         foreach ($compilerPasses as $compilerPass) {
