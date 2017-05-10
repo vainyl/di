@@ -56,13 +56,17 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
         }
 
         $loader = new YamlFileLoader($this->containerBuilder, new FileLocator($environment->getApplicationDirectory()));
-        $loader->load(sprintf('%s/di.yml', $environment->__toString()));
+        $loader->load(sprintf('%s/%s/di.yml', $environment->getApplicationDirectory(), $environment->__toString()));
 
         /**
          * @var Extension[] $extensions
          * @var CompilerPassInterface[] $compilerPasses
          */
-        $diExtensions = require sprintf('%s/di.php', $environment->__toString());
+        $diExtensions = require sprintf(
+            '%s/%s/di.php',
+            $environment->getApplicationDirectory(),
+            $environment->__toString()
+        );
         $extensions = $diExtensions['extensions'];
         foreach ($extensions as $extension) {
             $extension->load([], $this->containerBuilder, $environment);
