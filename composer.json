@@ -16,9 +16,6 @@
         "php": ">=7.0",
         "vainyl/core": "0.1.x-dev"
     },
-    "config": {
-        "secure-http": false
-    },
     "repositories": [
         {
             "type": "composer",
