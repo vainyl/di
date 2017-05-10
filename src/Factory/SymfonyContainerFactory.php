@@ -62,10 +62,12 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
          * @var Extension[] $extensions
          * @var CompilerPassInterface[] $compilerPasses
          */
-        list ($extensions, $compilerPasses) = require sprintf('%s/di.php', $environment->__toString());
+        $diExtensions = require sprintf('%s/di.php', $environment->__toString());
+        $extensions = $diExtensions['extensions'];
         foreach ($extensions as $extension) {
             $extension->load([], $this->containerBuilder);
         }
+        $compilerPasses = $diExtensions['compiler_passes'];
         foreach ($compilerPasses as $compilerPass) {
             $this->containerBuilder->addCompilerPass($compilerPass);
         }
@@ -84,7 +86,6 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
     {
         $containerPath = sprintf(
             '%s/container/%s.php',
-            $environment->getApplicationDirectory(),
             $environment->getCacheDirectory(),
             sha1($environment->__toString())
         );
