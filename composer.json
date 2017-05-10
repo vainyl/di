@@ -16,13 +16,10 @@
         "php": ">=7.0",
         "vainyl/core": "dev-master"
     },
-    "config": {
-        "secure-http": false
-    },
     "repositories": [
         {
             "type": "composer",
-            "url": "https://satis.vainyl.com:444/"
+            "url": "https://satis.vainyl.com:444"
         }
     ],
     "prefer-stable": true,
