@@ -38,9 +38,9 @@ abstract class AbstractContainerFactoryDecorator implements ContainerFactoryInte
     /**
      * @inheritDoc
      */
-    public function createContainer(EnvironmentInterface $descriptor): ContainerInterface
+    public function createContainer(EnvironmentInterface $environment): ContainerInterface
     {
-        return $this->containerFactory->createContainer($descriptor);
+        return $this->containerFactory->createContainer($environment);
     }
 
     /**

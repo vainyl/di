@@ -24,9 +24,9 @@ use Vainyl\Core\IdentifiableInterface;
 interface ContainerFactoryInterface extends IdentifiableInterface
 {
     /**
-     * @param EnvironmentInterface $descriptor
+     * @param EnvironmentInterface $environment
      *
      * @return ContainerInterface
      */
-    public function createContainer(EnvironmentInterface $descriptor): ContainerInterface;
+    public function createContainer(EnvironmentInterface $environment): ContainerInterface;
 }
