@@ -123,6 +123,9 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
             $container = $this->initContainer($environment);
         }
 
-        return new SymfonyContainerAdapter($container);
+        $adapter = new SymfonyContainerAdapter($container);
+        $container->set('app.di', $adapter);
+
+        return $adapter;
     }
 }
