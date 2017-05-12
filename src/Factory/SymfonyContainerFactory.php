@@ -56,16 +56,22 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
         }
 
         $loader = new YamlFileLoader($this->containerBuilder, new FileLocator($environment->getApplicationDirectory()));
-        $loader->load(sprintf('%s/di.yml', $environment->__toString()));
+        $loader->load(sprintf('%s/%s/di.yml', $environment->getApplicationDirectory(), $environment->__toString()));
 
         /**
          * @var Extension[] $extensions
          * @var CompilerPassInterface[] $compilerPasses
          */
-        list ($extensions, $compilerPasses) = require sprintf('%s/di.php', $environment->__toString());
+        $diExtensions = require sprintf(
+            '%s/%s/di.php',
+            $environment->getApplicationDirectory(),
+            $environment->__toString()
+        );
+        $extensions = $diExtensions['extensions'];
         foreach ($extensions as $extension) {
-            $extension->load([], $this->containerBuilder);
+            $extension->load([], $this->containerBuilder, $environment);
         }
+        $compilerPasses = $diExtensions['compiler_passes'];
         foreach ($compilerPasses as $compilerPass) {
             $this->containerBuilder->addCompilerPass($compilerPass);
         }
@@ -84,7 +90,6 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
     {
         $containerPath = sprintf(
             '%s/container/%s.php',
-            $environment->getApplicationDirectory(),
             $environment->getCacheDirectory(),
             sha1($environment->__toString())
         );
@@ -118,6 +123,9 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
             $container = $this->initContainer($environment);
         }
 
-        return new SymfonyContainerAdapter($container);
+        $adapter = new SymfonyContainerAdapter($container);
+        $container->set('app.di', $adapter);
+
+        return $adapter;
     }
 }
