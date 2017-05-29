@@ -14,11 +14,9 @@ namespace Vainyl\Di\Factory;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Vainyl\Core\AbstractIdentifiable;
 use Vainyl\Core\Application\EnvironmentInterface;
@@ -51,29 +49,12 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
      */
     public function initContainer(EnvironmentInterface $environment): ContainerBuilder
     {
-        foreach ($environment->toArray() as $parameter => $value) {
-            $this->containerBuilder->setParameter($parameter, $value);
-        }
-
+        $this->containerBuilder->setParameter('app.environment', $environment);
         $loader = new YamlFileLoader($this->containerBuilder, new FileLocator($environment->getApplicationDirectory()));
-        $loader->load(sprintf('%s/%s/di.yml', $environment->getApplicationDirectory(), $environment->__toString()));
+        $loader->load($environment->getContainerConfig());
 
-        /**
-         * @var Extension[] $extensions
-         * @var CompilerPassInterface[] $compilerPasses
-         */
-        $diExtensions = require sprintf(
-            '%s/%s/di.php',
-            $environment->getApplicationDirectory(),
-            $environment->__toString()
-        );
-        $extensions = $diExtensions['extensions'];
-        foreach ($extensions as $extension) {
+        foreach ($environment->getExtensions() as $extension) {
             $extension->load([], $this->containerBuilder, $environment);
-        }
-        $compilerPasses = $diExtensions['compiler_passes'];
-        foreach ($compilerPasses as $compilerPass) {
-            $this->containerBuilder->addCompilerPass($compilerPass);
         }
 
         $this->containerBuilder->compile();
