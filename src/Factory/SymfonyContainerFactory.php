@@ -49,7 +49,7 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
      */
     public function initContainer(EnvironmentInterface $environment): ContainerBuilder
     {
-        $this->containerBuilder->setParameter('app.environment', $environment);
+        $this->containerBuilder->set('app.environment', $environment);
         $loader = new YamlFileLoader($this->containerBuilder, new FileLocator($environment->getConfigDirectory()));
         $loader->load($environment->getContainerConfig());
 
