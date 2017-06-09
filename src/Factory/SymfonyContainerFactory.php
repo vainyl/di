@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Vainyl\Di\Factory;
 
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
@@ -21,7 +20,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Vainyl\Core\AbstractIdentifiable;
 use Vainyl\Core\Application\EnvironmentInterface;
 use Vainyl\Di\Exception\UnableToCacheContainerException;
-use Vainyl\Di\SymfonyContainerAdapter;
 
 /**
  * Class SymfonyContainerFactory
@@ -96,17 +94,16 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
     /**
      * @inheritDoc
      */
-    public function createContainer(EnvironmentInterface $environment): ContainerInterface
+    public function createContainer(EnvironmentInterface $environment)
     {
-        if ($environment->isCachingEnabled()) {
-            $container = $this->getCachedContainer($environment);
-        } else {
-            $container = $this->initContainer($environment);
+        $this->containerBuilder->set('app.environment', $environment);
+        $loader = new YamlFileLoader($this->containerBuilder, new FileLocator($environment->getConfigDirectory()));
+        $loader->load($environment->getContainerConfig());
+
+        foreach ($environment->getExtensions() as $extension) {
+            $extension->load([], $this->containerBuilder, $environment);
         }
 
-        $adapter = new SymfonyContainerAdapter($container);
-        $container->set('app.di', $adapter);
-
-        return $adapter;
+        return $this->containerBuilder;
     }
 }

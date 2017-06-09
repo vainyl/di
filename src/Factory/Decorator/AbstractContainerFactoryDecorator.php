@@ -10,9 +10,8 @@
  */
 declare(strict_types=1);
 
-namespace Vainyl\Di\Decorator;
+namespace Vainyl\Di\Factory\Decorator;
 
-use Psr\Container\ContainerInterface;
 use Vainyl\Core\Application\EnvironmentInterface;
 use Vainyl\Di\Factory\ContainerFactoryInterface;
 
@@ -38,7 +37,7 @@ abstract class AbstractContainerFactoryDecorator implements ContainerFactoryInte
     /**
      * @inheritDoc
      */
-    public function createContainer(EnvironmentInterface $environment): ContainerInterface
+    public function createContainer(EnvironmentInterface $environment)
     {
         return $this->containerFactory->createContainer($environment);
     }
