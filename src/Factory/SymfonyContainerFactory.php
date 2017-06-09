@@ -78,7 +78,7 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
         if (file_exists($containerPath)) {
             require_once $containerPath;
 
-            return new \CachedSymfonyContainer();
+            return new \CompiledContainer();
         }
 
         $container = $this->initContainer($environment);
@@ -86,7 +86,7 @@ class SymfonyContainerFactory extends AbstractIdentifiable implements ContainerF
             mkdir(dirname($containerPath), 0755, true);
         }
         $dumper = new PhpDumper($container);
-        if (false === file_put_contents($containerPath, $dumper->dump(['class' => 'CachedSymfonyContainer']))) {
+        if (false === file_put_contents($containerPath, $dumper->dump(['class' => 'CompiledContainer']))) {
             throw new UnableToCacheContainerException($this, $container, $environment, $containerPath);
         }
 
