@@ -36,5 +36,6 @@ class ContainerFactoryExtensionDecorator extends AbstractContainerFactoryDecorat
             $extension->load([], $containerBuilder, $environment);
         }
 
+        return $containerBuilder;
     }
 }
