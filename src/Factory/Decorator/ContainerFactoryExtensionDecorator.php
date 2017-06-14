@@ -36,7 +36,7 @@ class ContainerFactoryExtensionDecorator extends AbstractContainerFactoryDecorat
             (new \Symfony\Component\DependencyInjection\Loader\YamlFileLoader(
                 $containerBuilder,
                 new \Symfony\Component\Config\FileLocator(
-                    $extension->getDirectory()
+                    $extension->getConfigDirectory()
                 )
             ))
                 ->load('di.yml');
