@@ -41,12 +41,20 @@ class ContainerFactoryExtensionDecorator extends AbstractContainerFactoryDecorat
             ))
                 ->load('di.yml');
 
+            $definition = (new \Symfony\Component\DependencyInjection\Definition())
+                ->setClass(get_class($extension))
+                ->addArgument(new \Symfony\Component\DependencyInjection\Reference('app.environment'))
+                ->addTag('extension');
+
             $containerBuilder->setDefinition(
                 sprintf('extension.%s', $extension->getName()),
-                (new \Symfony\Component\DependencyInjection\Definition(get_class($this)))->addTag('extension')
+                $definition
             );
 
             $containerBuilder->registerExtension($extension);
+            foreach ($extension->getCompilerPasses() as $compilerPass) {
+                $containerBuilder->addCompilerPass($compilerPass);
+            }
         }
 
         return $containerBuilder;
