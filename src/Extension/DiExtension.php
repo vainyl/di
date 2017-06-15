@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 namespace Vainyl\Di\Extension;
 
-use Vainyl\Core\Extension\AbstractExtension;
+use Vainyl\Core\Extension\AbstractFrameworkExtension;
 
 /**
  * Class DiExtension
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-class DiExtension extends AbstractExtension
+class DiExtension extends AbstractFrameworkExtension
 {
     /**
      * @inheritDoc
