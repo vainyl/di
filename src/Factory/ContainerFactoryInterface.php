@@ -28,5 +28,5 @@ interface ContainerFactoryInterface extends IdentifiableInterface
      *
      * @return ContainerInterface
      */
-    public function createContainer(EnvironmentInterface $environment): ContainerInterface;
+    public function createContainer(EnvironmentInterface $environment);
 }
