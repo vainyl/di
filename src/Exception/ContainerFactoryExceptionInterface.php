@@ -25,5 +25,5 @@ interface ContainerFactoryExceptionInterface extends ArrayInterface, \Throwable
     /**
      * @return ContainerFactoryInterface
      */
-    public function getContainerFactory() : ContainerFactoryInterface;
+    public function getContainerFactory(): ContainerFactoryInterface;
 }

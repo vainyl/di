@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Vainyl\Di\Factory\Decorator;
 
+use Vainyl\Core\AbstractIdentifiable;
 use Vainyl\Core\Application\EnvironmentInterface;
 use Vainyl\Di\Factory\ContainerFactoryInterface;
 
@@ -20,7 +21,7 @@ use Vainyl\Di\Factory\ContainerFactoryInterface;
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-abstract class AbstractContainerFactoryDecorator implements ContainerFactoryInterface
+abstract class AbstractContainerFactoryDecorator extends AbstractIdentifiable implements ContainerFactoryInterface
 {
     private $containerFactory;
 
@@ -40,13 +41,5 @@ abstract class AbstractContainerFactoryDecorator implements ContainerFactoryInte
     public function createContainer(EnvironmentInterface $environment)
     {
         return $this->containerFactory->createContainer($environment);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getId(): string
-    {
-        return $this->containerFactory->getId();
     }
 }
