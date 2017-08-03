@@ -24,7 +24,6 @@ use Vainyl\Di\Exception\UnableToCacheContainerException;
  */
 class ContainerFactoryDumperDecorator extends AbstractContainerFactoryDecorator
 {
-
     /**
      * @inheritDoc
      */

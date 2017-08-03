@@ -38,7 +38,6 @@ class ContainerFactoryCacheDecorator extends AbstractContainerFactoryDecorator
             return new \CompiledContainer();
         }
 
-
         return parent::createContainer($environment);
     }
 }

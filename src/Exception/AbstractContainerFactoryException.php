@@ -20,7 +20,8 @@ use Vainyl\Di\Factory\ContainerFactoryInterface;
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-abstract class AbstractContainerFactoryException extends AbstractCoreException implements ContainerFactoryExceptionInterface
+abstract class AbstractContainerFactoryException extends AbstractCoreException implements
+    ContainerFactoryExceptionInterface
 {
     private $containerFactory;
 

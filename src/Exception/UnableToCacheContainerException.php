@@ -56,9 +56,9 @@ class UnableToCacheContainerException extends AbstractContainerFactoryException
     {
         return array_merge(
             [
-                'container' => spl_object_hash($this->container),
+                'container'   => spl_object_hash($this->container),
                 'environment' => $this->environment->toArray(),
-                'path' => $this->path,
+                'path'        => $this->path,
             ],
             parent::toArray()
         );

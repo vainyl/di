@@ -37,7 +37,7 @@ class SymfonyContainerAdapter implements ContainerInterface
     /**
      * @inheritDoc
      */
-    public function set($id, $class) : ContainerInterface
+    public function set($id, $class): ContainerInterface
     {
         $this->container->set($id, $class);
 
