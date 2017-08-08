@@ -44,8 +44,8 @@ class ContainerFactoryExtensionDecorator extends AbstractContainerFactoryDecorat
             );
 
             $containerBuilder->registerExtension($extension);
-            foreach ($extension->getCompilerPasses() as $compilerPass) {
-                $containerBuilder->addCompilerPass($compilerPass);
+            foreach ($extension->getCompilerPasses() as $compilerPassSettings) {
+                $containerBuilder->addCompilerPass(...$compilerPassSettings);
             }
         }
 
