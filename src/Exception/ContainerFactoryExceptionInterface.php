@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Vainyl\Di\Exception;
 
-use Vainyl\Core\ArrayInterface;
+use Vainyl\Core\Exception\CoreExceptionInterface;
 use Vainyl\Di\Factory\ContainerFactoryInterface;
 
 /**
@@ -20,7 +20,7 @@ use Vainyl\Di\Factory\ContainerFactoryInterface;
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
  */
-interface ContainerFactoryExceptionInterface extends ArrayInterface, \Throwable
+interface ContainerFactoryExceptionInterface extends CoreExceptionInterface
 {
     /**
      * @return ContainerFactoryInterface
