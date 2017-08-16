@@ -31,13 +31,13 @@ abstract class AbstractContainerFactoryException extends AbstractCoreException i
      * @param ContainerFactoryInterface $containerFactory
      * @param string                    $message
      * @param int                       $code
-     * @param \Exception|null           $previous
+     * @param \Throwable|null           $previous
      */
     public function __construct(
         ContainerFactoryInterface $containerFactory,
         string $message,
         int $code = 500,
-        \Exception $previous = null
+        \Throwable $previous = null
     ) {
         $this->containerFactory = $containerFactory;
         parent::__construct($message, $code, $previous);
